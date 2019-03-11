@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
 <div className="App">
-<Users title="Users List"/>
+<Users/>
 
 </div>
 
@@ -15,3 +15,4 @@ class App extends Component {
 }
 
 export default App;
+ 
