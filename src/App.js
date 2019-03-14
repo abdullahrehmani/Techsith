@@ -1,30 +1,26 @@
-  import React, { Component } from 'react';
+import React, { Component } from 'react';
+import './App.css';
+import Parent from './components/parentTochild/parent'
+class App extends Component {
+  state={
+    title:'placeHoldet tile'
+  }
+  changeTheWorld = (newTitle) => {
+       this.setState({title:newTitle});
+  }
 
-  import './App.css';
+ 
+ 
+  render() {
+    return (
+      <div className="App">
+      <Parent changeTheWorldEvent={this.changeTheWorld.bind(this ,'new world')} 
+      keepTheWorldSameEvent={this.changeTheWorld.bind(this ,'same world')}
+      title={this.state.title }/> 
+    
+      </div>
+    );
+  }
+}
 
-  class App extends Component {
-    state={
-      name:'tecsith' 
-    }
-    changeName=(newName )=>{
-      this.setState({
-      name:newName
-      })
-    }
-    render() {
-      return (
-        <div className="App">
-        <br/><br/> 
-        
-        <button onClick={()=>this.changeName('Ali')}>Chang state</button>
-        <br/><br/> 
-        <button onClick={this.changeName.bind(this , 'good')}>Chang state</button>  
-        <div>{this.state.name }</div>
-        <div>{this.state.name }</div>
-      
-        </div>
-      );
-    }
-  } 
-
-  export default App;
+export default App;
