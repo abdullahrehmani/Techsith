@@ -1,18 +1,30 @@
-import React, { Component } from 'react';
-import Users from './users/Users'
-import './App.css';
+  import React, { Component } from 'react';
 
-class App extends Component {
-  render() {
-    return (
-<div className="App">
-<Users/>
+  import './App.css';
 
-</div>
+  class App extends Component {
+    state={
+      name:'tecsith' 
+    }
+    changeName=(newName )=>{
+      this.setState({
+      name:newName
+      })
+    }
+    render() {
+      return (
+        <div className="App">
+        <br/><br/> 
+        
+        <button onClick={()=>this.changeName('Ali')}>Chang state</button>
+        <br/><br/> 
+        <button onClick={this.changeName.bind(this , 'good')}>Chang state</button>  
+        <div>{this.state.name }</div>
+        <div>{this.state.name }</div>
+      
+        </div>
+      );
+    }
+  } 
 
-    );
-  }
-}
-
-export default App;
- 
+  export default App;
