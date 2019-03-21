@@ -1,47 +1,44 @@
 import React, { Component } from 'react';
-import Child from './Child'
 import './App.css';
+const Temp=(props)=>{
+  console.log('render temp')
+  return(<div>{props.val}</div>)
+
+}
+
 
 
 class App extends Component {
 
-  constructor(){
-    super();
-    this.state={
-      name:'john'
-    };
-    console.log('constructor');
-  }
-  componentWillMount(){
-    if(window.innerWidth<500){
-    this.setState({innerWidth:window.innerWidth});
-    }
-    console.log('componentwillMount')
-  }
-  componentDidMount(){
-    console.log('componentDidMount')
-
-  }
-  componentWillReceiveProps(){
-    console.log('componentWillReceiveProps')
-  }
-changeState(){
-  this.setState({name:'jill'})
+componentDidMount() {
+  setInterval(() => {
+    this.setState(()=>{
+      return{val:1}
+    });  
+  },2000);
 }
 
-  render() {
-    console.log('render');
-    return (
 
+// shouldComponentUpdate(nextProp, nextState){
+//   console.log('nextstate',nextState)
+//   console.log('current state',this.state)
+
+//   return(this.state.val===nextState.val ?false:true)
+// }
+
+  state={
+    val:1
+  }
+  render() {
+    console.log('render app')
+    return (
       <div className="App">
-     name: {this.state.name}
-    <br></br>
-       innerWidths:{this.state.innerWidth}
-     <Child name={this.state.name}/>
-     <button onClick={this.changeState.bind(this)}>change</button>
+      <Temp val={this.state.val} />
+    
       </div>
     );
   }
 }
 
 export default App;
+   
