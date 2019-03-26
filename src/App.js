@@ -1,71 +1,67 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BrowserRouter as Router , Link , NavLink , Redirect, Prompt } from 'react-router-dom';
-import Route from 'react-router-dom/Route'
+import PropTypes from 'prop-types'
 
-const User=(params)=>{
-  return(<h1>welcome {params.username}</h1>)
+const Test=(props)=> {
+  return(
+    <div>
+ <h1>{props.str}</h1>
+ <h1>{props.bool ? 'bool':'no bool'}</h1>
+ <h1>{props.strOrNum}</h1>
+ <div>
+   {
+     props.ary.map((val)=>{
+    return(<li key={val}>{val}</li>)
+
+     })
+   }
+ </div>
+ <div>
+   {
+     props.aryOfObj.map((val)=>{
+    return(<li key={val.age}>{val.name}</li>)
+
+     })
+   }
+ </div>
+ <h1>{props.children}</h1>
+
+</div>
+   
+  )
 }
+Test.propTypes={
+  str:PropTypes.string,
+  bool:PropTypes.bool,
+  strOrNum:PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
+  ary:PropTypes.arrayOf(PropTypes.number),
+  aryOfObj:PropTypes.arrayOf(PropTypes.shape(
+    {
+      name:PropTypes.string,
+      age:PropTypes.numeber
+    }
+  )),
+  children:PropTypes.string
+  
+}
+
+
 
 
 class App extends Component {
-state ={
-  loggedIn:false
-}
-loginHnadle =()=>{
-  this.setState(preState=>({
-    loggedIn: !preState.loggedIn
-  }))
-}
-
-
   render() {
     return (
-      <Router>
       <div className="App">
-      <ul>
-        <li><NavLink  to="/" exact  activeStyle={ {color:'green'}}  >home</NavLink></li>
-        <li><NavLink  to="/about" exact activeStyle={ {color:'green'}} >about</NavLink></li>
-        <li><NavLink  to="/user/john" exact activeStyle={ {color:'green'}} >User john</NavLink></li>
-        <li><NavLink  to="/user/peter" exact  activeStyle={ {color:'green'}} >User peter</NavLink></li>
-        
-      </ul>
-      <Prompt  when={!this.state.loggedIn}
-       message={(location)=>{
-         return location.pathname.startsWith('/user') ? 'are you sure' :true
+      <Test 
+      bool
+      str={'Techsith'} 
+      strOrNum={10}
 
-       }} />
-
-
-<input type="button" value={this.state.loggedIn ? 'log out':'login'} onClick={this.loginHnadle.bind(this)} />
-
-
-      <Link  to="/" ></Link>
-      
-
-
-      <Route path="/"  exact  strict
-      render={
-        ()=>{
-          return(<h1>welcome home</h1>)
-        }
-      }  />
-
-<Route path="/about"  exact strict render={
-        ()=>{
-          return(<h1>welcome about</h1>)
-        }
-      }  />
-
-<Route  path="/user/:username" exact strict  render={({match})=>(
-  this.state.loggedIn ? (<User  username={match.params.username}/>):(<Redirect to='/' />)
-)}/>
-
-
-
-
+      ary={[1,2,3]}
+      aryOfObj={[{name:'john', age:10},{name:'peter', age:15 }]}
+      >Children</Test>
+ 
       </div>
-      </Router>
     );
   }
 }
