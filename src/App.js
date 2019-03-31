@@ -1,53 +1,50 @@
 import React, { Component } from 'react';
-
+import logo from './logo.svg';
 import './App.css';
-import {connect} from 'react-redux'
+import {connect } from 'react-redux'
+
 class App extends Component {
-
-
-
   render() {
     return (
       <div className="App">
-
-  <div>Age:<span>{this.props.age}</span></div>
-  <button onClick={this.props.onAgeUP}>Age Up </button>
-  <button onClick={this.props.onAgeDown}>Age down</button>
-  <hr/>
-  <div>History</div>
-  <div>
-    <ul>
-{
-this.props.history.map(el=>(
-  <li className=" historyItem" key={el.id}onClick={()=>this.props.onDelItem(el.id)} >
-    {el.age}
-  </li>
-
-))
-}      
-    </ul>
-
-  </div>
-       
+      <div className="col">
+      <div><span>A:</span><span>{this.props.a}</span>
+      </div>
+      <button onClick={()=>this.props.updateA(this.props.b)}>
+      Update A
+      </button>
+      </div>
+      <div className="col">
+      <div><span>B:</span><span>{this.props.b}</span></div>
+      <button onClick={()=>this.props.updateB(this.props.a)} >
+      Update B 
+      </button>
+      </div>
+        
       </div>
     );
-      }
+  }
+}
+
+
+const mapDispachToProps= dispach=>{
+  return{
+    updateA: b=>dispach({type:'UPDATE_A', b:b}),
+    updateB: a=>dispach({type:'UPDATE_B', a:a})
+  }
+
+
+  }
+  const mapStateToProps= state=>{
+    return{
+      a:state.rA.a,
+      b:state.rB.b
     }
-    const mapStateToProps=(state)=>{
-      return{
-        age:state.age,
-        history:state.history
-      }
-    }
-
-    const mapDispachToProps = (dispach)=>{
-      return{
-        onAgeUP:()=> dispach({type:'AGE_UP',value:1}),
-        onAgeDown:()=>dispach({type:'AGE_DOWN',value:1}),
-        onDelItem:(id)=>dispach({type:"DEL_ITEM",key: id})
-      };
-    };
-  
+  };
 
 
-export default connect(mapStateToProps,mapDispachToProps)(App);
+
+export default connect(
+  mapStateToProps,
+   mapDispachToProps
+   )(App);
