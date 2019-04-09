@@ -1,50 +1,40 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {connect } from 'react-redux'
+import React, { Component } from "react";
+import "./App.css";
+import { connect } from "react-redux";
+import logo from "./logo.svg"
+import * as actionCreator from "./store/actions/actions"
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-      <div className="col">
-      <div><span>A:</span><span>{this.props.a}</span>
-      </div>
-      <button onClick={()=>this.props.updateA(this.props.b)}>
-      Update A
-      </button>
-      </div>
-      <div className="col">
-      <div><span>B:</span><span>{this.props.b}</span></div>
-      <button onClick={()=>this.props.updateB(this.props.a)} >
-      Update B 
-      </button>
-      </div>
-        
+        <div className="Age-label">
+          your age: <span>{this.props.age}</span>
+        </div>
+        <button onClick={this.props.onAgeUp}>Age UP</button>
+        <button onClick={this.props.onAgeDown}>Age Down</button>
+        {this.props.loading && <img src={logo} className="App-logo"/>}
       </div>
     );
   }
 }
 
-
-const mapDispachToProps= dispach=>{
-  return{
-    updateA: b=>dispach({type:'UPDATE_A', b:b}),
-    updateB: a=>dispach({type:'UPDATE_B', a:a})
-  }
-
-
-  }
-  const mapStateToProps= state=>{
-    return{
-      a:state.rA.a,
-      b:state.rB.b
-    }
+const mapStateToProps = state => {
+  return {
+    age: state.age,
+    loading: state.loading
   };
+};
 
-
-
+const mapDispachToProps = dispatch => {
+  return {
+    onAgeUp: () => dispatch(actionCreator.ageUp(1)),
+    onAgeDown: () => dispatch(actionCreator.ageDown(1))
+  };
+};
 export default connect(
   mapStateToProps,
-   mapDispachToProps
-   )(App);
+  mapDispachToProps
+)(App);
+ 

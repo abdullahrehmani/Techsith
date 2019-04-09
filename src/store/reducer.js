@@ -1,27 +1,25 @@
-
-const intialState ={
-    a:1,
-    b:1
+const initialState = {
+    age:20
 };
 
-const reducer =(state= intialState,action)=>{
-    if(action.type==='UPDATE_A'){
-        return{
-            ...state,
-            a:state.a+state.b+1
-        }
+const reducer = (state=initialState, action) => {
+    const newState = {...state};
+
+    switch(action.type){
+        case 'AGE_UP': 
+            newState.age += action.value;
+            newState.loading = false;
+            break;
+        
+        case 'AGE_DOWN': 
+            newState.age -= action.value;
+            break;
+            case 'LOADING':
+            newState.loading = true;
+
 
     }
-    if(action.type==='UPDATE_B'){
-        return{
-            ...state,
-            b:state.a+state.b+1
-        }
-
-    }
-
-
-    return state;
-}
+    return newState;
+};
 
 export default reducer;
